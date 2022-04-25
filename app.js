@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const userRoutes = require('./routes/user');
 
 mongoose.connect('mongodb+srv://Archie:Openclassrooms@cluster0.j3xkx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -17,6 +18,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS'); // Autorise les méthodes de communication GET/POST/PUT...
     next();
   });
+
+  app.use('/api/auth', userRoutes);
 
 app.use((req, res, next) => {
   console.log('Requête reçue !');
