@@ -64,10 +64,12 @@ exports.modifySauce = (req, res, next) => {
       .then(() => res.status(200).json({ message: "Sauce modified !" }))
       .catch((error) => res.status(400).json({ error }));
   } else {
-    console.log(req.file.filename)
+    console.log(req.file.filename);
     const sauceObject = {
       ...JSON.parse(req.body.sauce),
-      imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+      imageUrl: `${req.protocol}://${req.get("host")}/images/${
+        req.file.filename
+      }`,
     };
     Sauce.updateOne(
       { _id: req.params.id },
@@ -76,4 +78,9 @@ exports.modifySauce = (req, res, next) => {
       .then(() => res.status(200).json({ message: "sauce modified" }))
       .catch((error) => res.status(400).json({ error }));
   }
+};
+
+exports.like = (req, res, next) => {
+  console.log('that\'s it')
+  
 };
