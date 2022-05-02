@@ -66,6 +66,19 @@ exports.modifySauce = (req, res, next) => {
       .then(() => res.status(200).json({ message: "Sauce modified !" }))
       .catch((error) => res.status(400).json({ error }));
   } else {
+
+    Sauce.findOne({ _id: req.params.id }).then((sauce) => {
+      if (!sauce) {
+        res.status(404).json({
+          error: new Error("No such Sauce!"),
+        });
+      }
+      const filename = sauce.imageUrl.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        console.log("image deleted")
+      });
+    });
+
     const sauceObject = {
       ...JSON.parse(req.body.sauce),
       imageUrl: `${req.protocol}://${req.get("host")}/images/${
