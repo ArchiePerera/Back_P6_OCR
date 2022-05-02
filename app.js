@@ -4,10 +4,14 @@ const userRoutes = require("./routes/user");
 const sauceRoutes = require("./routes/sauce");
 const path = require('path');
 
+require('dotenv').config()
+
+console.log(process.env)
+
 mongoose
   .connect(
-    "mongodb+srv://Archie:Openclassrooms@cluster0.j3xkx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_USER_PWD}@${process.env.MONGO_CLUSTER}.j3xkx.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
+{ useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
