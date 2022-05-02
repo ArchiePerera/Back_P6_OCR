@@ -1,5 +1,6 @@
 const fs = require("fs");
 const Sauce = require("../models/Sauce");
+const { db } = require("../models/Sauce");
 
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
@@ -15,7 +16,6 @@ exports.getAllSauces = (req, res, next) => {
 
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
-  console.log(req);
   const sauce = new Sauce({
     ...sauceObject,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${
@@ -64,7 +64,6 @@ exports.modifySauce = (req, res, next) => {
       .then(() => res.status(200).json({ message: "Sauce modified !" }))
       .catch((error) => res.status(400).json({ error }));
   } else {
-    console.log(req.file.filename);
     const sauceObject = {
       ...JSON.parse(req.body.sauce),
       imageUrl: `${req.protocol}://${req.get("host")}/images/${
@@ -80,7 +79,58 @@ exports.modifySauce = (req, res, next) => {
   }
 };
 
-exports.like = (req, res, next) => {
-  console.log('that\'s it')
-  
+exports.like = async (req, res, next) => {
+  try {
+    const sauce = await Sauce.findById(req.params.id);
+
+    console.log(sauce);
+    let userId = req.body.userId;
+    let like = req.body.like;
+    let usersLiked = sauce.usersLiked;
+    let usersDisliked = sauce.usersDisliked;
+
+    console.log(usersLiked)
+
+    switch (like) {
+      case 1:
+        if ((usersLiked === usersLiked.includes(userId))) {
+          return usersLiked;
+        } else {
+          usersLiked.addToSet(userId);
+        }
+        usersDisliked = usersDisliked.filter((el) => el !== req.userId);
+        break;
+      case -1:
+        if ((usersDisliked === usersDisliked.includes(userId))) {
+          return usersDisliked;
+        } else {
+          usersDisliked.addToSet(userId);
+        }
+        usersLiked = usersLiked.filter((el) => el !== userId);
+        break;
+      case 0:
+        usersLiked = usersLiked.filter((el) => el !== userId);
+        usersDisliked = usersDisliked.filter((el) => el !== userId);
+        break;
+      default:
+        throw res.status(418).json({ err });
+    }
+
+    console.log(usersLiked)
+
+    const likes = usersLiked.length;
+    const dislikes = usersDisliked.length;
+
+    await sauce.updateOne({
+      usersLiked: usersLiked,
+      usersDisliked: usersDisliked,
+      likes: usersLiked.length,
+      dislikes: usersDisliked.length,
+    });
+
+    res.status(200).send({ message: "item liked or disliked" });
+  } catch (err) {
+    res.status(400).json({ err });
+    console.log(err)
+  }
 };
