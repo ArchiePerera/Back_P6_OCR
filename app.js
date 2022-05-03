@@ -2,16 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const sauceRoutes = require("./routes/sauce");
-const path = require('path');
+const path = require("path");
 
-require('dotenv').config()
-
-console.log(process.env)
+require("dotenv").config();
 
 mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_USER_PWD}@${process.env.MONGO_CLUSTER}.j3xkx.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
-{ useNewUrlParser: true, useUnifiedTopology: true }
+    { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
@@ -33,9 +31,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/auth", userRoutes);
-app.use("/api/sauces", sauceRoutes)
+app.use("/api/sauces", sauceRoutes);
 
 module.exports = app;

@@ -1,6 +1,5 @@
 const fs = require("fs");
 const Sauce = require("../models/Sauce");
-const { db } = require("../models/Sauce");
 
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
@@ -16,6 +15,17 @@ exports.getAllSauces = (req, res, next) => {
 
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
+
+  if (
+    typeof sauceObject.name !== "string" ||
+    typeof sauceObject.manufacturer !== "string" ||
+    typeof sauceObject.description !== "string" ||
+    typeof sauceObject.mainPepper !== "string" ||
+    typeof sauceObject.heat !== "number"
+  ) {
+    return res.status(400).json({ message: "Form is not well completed" });
+  }
+
   const sauce = new Sauce({
     ...sauceObject,
     likes: 0,
@@ -66,7 +76,6 @@ exports.modifySauce = (req, res, next) => {
       .then(() => res.status(200).json({ message: "Sauce modified !" }))
       .catch((error) => res.status(400).json({ error }));
   } else {
-
     Sauce.findOne({ _id: req.params.id }).then((sauce) => {
       if (!sauce) {
         res.status(404).json({
@@ -75,7 +84,7 @@ exports.modifySauce = (req, res, next) => {
       }
       const filename = sauce.imageUrl.split("/images/")[1];
       fs.unlink(`images/${filename}`, () => {
-        console.log("image deleted")
+        console.log("image deleted");
       });
     });
 
@@ -105,7 +114,7 @@ exports.like = async (req, res, next) => {
 
     switch (like) {
       case 1:
-        if ((usersLiked === usersLiked.includes(userId))) {
+        if (usersLiked === usersLiked.includes(userId)) {
           return usersLiked;
         } else {
           usersLiked.addToSet(userId);
@@ -113,7 +122,7 @@ exports.like = async (req, res, next) => {
         usersDisliked = usersDisliked.filter((el) => el !== req.userId);
         break;
       case -1:
-        if ((usersDisliked === usersDisliked.includes(userId))) {
+        if (usersDisliked === usersDisliked.includes(userId)) {
           return usersDisliked;
         } else {
           usersDisliked.addToSet(userId);
@@ -141,6 +150,5 @@ exports.like = async (req, res, next) => {
     res.status(200).send({ message: "item liked or disliked" });
   } catch (err) {
     res.status(400).json({ err });
-    console.log(err)
   }
 };
