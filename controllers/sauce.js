@@ -98,13 +98,10 @@ exports.like = async (req, res, next) => {
   try {
     const sauce = await Sauce.findById(req.params.id);
 
-    console.log(sauce);
     let userId = req.body.userId;
     let like = req.body.like;
     let usersLiked = sauce.usersLiked;
     let usersDisliked = sauce.usersDisliked;
-
-    console.log(usersLiked)
 
     switch (like) {
       case 1:
@@ -130,8 +127,6 @@ exports.like = async (req, res, next) => {
       default:
         throw res.status(418).json({ err });
     }
-
-    console.log(usersLiked)
 
     const likes = usersLiked.length;
     const dislikes = usersDisliked.length;
