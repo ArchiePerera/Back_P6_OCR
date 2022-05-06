@@ -70,8 +70,8 @@ Utilisation de conditions pour éviter des injections et l'envoi de formulaire v
 
 # Contenu du fichier .env
 
-**MONGO_USERNAME** = identifiant de votre base de données
-**MONGO_USER_PWD** = mot de passe de votre base de données
-**MONGO_DB_NAME** = nom de votre base de données
-**MONGO_CLUSTER** = nom du cluster de votre base de données
-**TOKEN** = token pour l'utilisation de *jsonwebtoken*
+- **MONGO_USERNAME** = identifiant de votre base de données
+- **MONGO_USER_PWD** = mot de passe de votre base de données
+- **MONGO_DB_NAME** = nom de votre base de données
+- **MONGO_CLUSTER** = nom du cluster de votre base de données
+- **TOKEN** = token pour l'utilisation de *jsonwebtoken*
