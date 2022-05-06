@@ -20,6 +20,10 @@ Dans le dossier back, installez les dépendances :
 
 Dans le dossier front, suivez les instructions du fichier README.
 
+## Base de données
+
+L'API est conçu pour fonctionner avec MongoDB Atlas et nécessite un cluster. L'identifiant, le mot de passe, le nom de la base de données et celui du cluster sont nécessaire pour la création du fichier .env et initialiser les variables d'environnement.
+
 ## Démarrer le serveur back
 
 Pour démarrer le serveur back sans intention de modifier les fichiers :
@@ -64,4 +68,10 @@ Utilisation de dépendances pour la sécurité (OWASP)
 Utilisation de regex pour vérification des champs email
 Utilisation de conditions pour éviter des injections et l'envoi de formulaire vide
 
+# Contenu du fichier .env
 
+**MONGO_USERNAME** = identifiant de votre base de données
+**MONGO_USER_PWD** = mot de passe de votre base de données
+**MONGO_DB_NAME** = nom de votre base de données
+**MONGO_CLUSTER** = nom du cluster de votre base de données
+**TOKEN** = token pour l'utilisation de *jsonwebtoken*
