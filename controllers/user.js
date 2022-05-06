@@ -2,7 +2,12 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
+// Création d'un utilisateur
+
 exports.signup = (req, res, next) => {
+
+  // Hash du mot de passe via bcrypt
+
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -11,9 +16,13 @@ exports.signup = (req, res, next) => {
         password: hash,
       });
 
+      // Vérification via une regex de la forme de l'input entrée par l'utilisateur dans le champ email
+
       if (!/^[\w\d.+-]+@[\w.-]+\.[a-z]{2,}$/.test(req.body.email)) {
         return res.status(400).json({ message: "email invalide" });
       }
+
+      // Enregistrement des données utilisateurs en Base de données
 
       user
         .save()
@@ -23,16 +32,26 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+// Login d'un utilisateur
+
 exports.login = (req, res, next) => {
+
+  // Vérification de l'input entré par l'utilisateur dans le champ email
+
   if (!/^[\w\d.+-]+@[\w.-]+\.[a-z]{2,}$/.test(req.body.email)) {
     return res.status(400).json({ message: "email invalide" });
   }
+
+  // Recherche de l'email dans la Base de données
 
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
       }
+
+      // Comparaison des Hash pour le mot de passe utilisateur
+
       bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {

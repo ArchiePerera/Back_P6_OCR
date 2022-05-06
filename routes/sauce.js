@@ -5,6 +5,8 @@ const multer = require("../middleware/multer-config");
 
 const router = express.Router();
 
+// Construction des routes avec les middlewares d'authentification et de gestion d'images
+
 router.get("/", auth, sauceCtrl.getAllSauces);
 router.post("/", auth, multer, sauceCtrl.createSauce);
 
