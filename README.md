@@ -1,12 +1,12 @@
 # Perera_Archivaldo_code_1_08042022
 
-Le dossier renferme l'API développé pour le site *HOT TAKES* dont le front est diponible sur ce repo github.
+Le dossier renferme l'API développée pour le site *HOT TAKES* dont le front est diponible sur ce [repo github](https://github.com/ArchiePerera/Web-Developer-P6).
 
 ## Architecture des répertoires
 
-Créer un dossier vide.
+Créez un dossier vide.
 
-Dans ce dossier, clonez le repo Perera_Archivaldo_code_1_08042022, et renommez-le "back" :
+Dans ce dossier, clonez le repo [Back_P6_OCR](https://github.com/ArchiePerera/Back_P6_OCR), et renommez-le "back" :
 
 ```git clone git@github.com:ArchiePerera/Back_P6_OCR.git```
 
