@@ -14,7 +14,7 @@ Toujours dans le même dossier, clonez le [repo suivant](https://github.com/Arch
 
 ```git clone git@github.com:ArchiePerera/Web-Developer-P6.git```
 
-Dans le dossier back, installer les dépendances :
+Dans le dossier back, installez les dépendances :
 
 ```npm install```
 
@@ -46,7 +46,7 @@ Si l'un ou l'autre des serveurs n'utilise pas les ports prévus, veuillez redém
 
 ## Accès à l'application
 
-Dans le navigateur, veuiller atteindre l'adresse suivante :
+Dans le navigateur, veuillez atteindre l'adresse suivante :
 
 ```localhost:4200```
 
