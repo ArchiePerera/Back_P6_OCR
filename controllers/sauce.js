@@ -87,6 +87,8 @@ exports.deleteSauce = (req, res, next) => {
       });
     }
 
+    // Comparaison de l'userId pour que seul le propriétaire de la sauce puisse delete
+
     if (sauce.userId !== req.auth.userId) {
       return res.status(401).json({
         error: new Error('Unauthorized request!')
